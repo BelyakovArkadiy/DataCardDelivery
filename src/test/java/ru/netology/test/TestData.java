@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class TestData {
 
-    Faker faker = new Faker(new Locale("ru"));
+    private static Faker faker = new Faker(new Locale("ru"));
 
 
     public static String getCity(){
@@ -25,16 +25,11 @@ public class TestData {
         return city[rnd];
     }
     public static String getDatePlus(int plus) {
-        LocalDate date = LocalDate.now();
-        LocalDate dateDelivery = date.plusDays(plus);
-        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String dataText = dateDelivery.format(formatters);
-        return dataText;
+        return LocalDate.now().plusDays(plus).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         }
 
 
         public static String enterName(){
-        Faker faker = new Faker(new Locale("ru"));
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String name = firstName + " " + lastName;
@@ -42,9 +37,8 @@ public class TestData {
     }
 
     public static String enterPhone()  {
-        Faker faker = new Faker(new Locale("ru"));
-        String phone = faker.numerify("+7##########");
-        return phone;
+        return  faker.numerify("+7##########");
+
     }
 
     private TestData() {
