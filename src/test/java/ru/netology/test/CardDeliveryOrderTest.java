@@ -14,8 +14,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class CardDeliveryOrderTest {
-    TestData testData = new TestData();
-    Faker faker = new Faker(new Locale("ru"));
+
 
     @BeforeEach
     public void setUp() {
@@ -27,31 +26,31 @@ public class CardDeliveryOrderTest {
     void shouldTestAllFields() {
 
         $("[data-test-id=city] [placeholder='Город']").
-                setValue(testData.getCity());
+                setValue(TestData.getCity());
         $("[data-test-id=date] [placeholder='Дата встречи']").
                 sendKeys( Keys.CONTROL +"A",Keys.DELETE);
         $("[data-test-id=date] [placeholder='Дата встречи']").
-                setValue(testData.getDatePlusFive());
+                setValue(TestData.getDatePlus(5));
         $("[data-test-id=name] [name='name']").
-                setValue(testData.enterName(faker));
+                setValue(TestData.enterName());
         $("[data-test-id=phone] [name='phone']").
-                setValue(testData.enterPhone(faker));
+                setValue(TestData.enterPhone());
         $("[class=checkbox__box]").click();
         $(withText("Запланировать")).click();
         $(withText("Встреча успешно запланирована на")).
                 shouldBe(visible, Duration.ofSeconds(15));
-        $(withText(testData.getDatePlusFive())).
+        $(withText(TestData.getDatePlus(5))).
                 shouldBe(visible, Duration.ofSeconds(15));
         $("[data-test-id=date] [placeholder='Дата встречи']").
                 sendKeys( Keys.CONTROL +"A",Keys.DELETE);
         $("[data-test-id=date] [placeholder='Дата встречи']").
-                setValue(testData.getDatePlusSeven());
+                setValue(TestData.getDatePlus(7));
         $(withText("Запланировать")).click();
         $(withText("Перепланировать")).
                 shouldBe(visible, Duration.ofSeconds(3)).click();
         $(withText("Встреча успешно запланирована на")).
                 shouldBe(visible, Duration.ofSeconds(15));
-        $(withText(testData.getDatePlusSeven())).
+        $(withText(TestData.getDatePlus(7))).
                 shouldBe(visible, Duration.ofSeconds(15));
 
     }
